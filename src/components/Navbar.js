@@ -2,7 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 //import { NavLink } from "react-router-dom";
 //import "./index.css";
-import { Layout } from "antd";
+import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
 const { Header } = Layout;
@@ -12,15 +12,22 @@ const Navbar = () => {
     <Layout className="layout">
       <Header>
         <div className="logo" />
-        <Link
+        <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["2"]}
           style={{ lineHeight: "64px" }}
         >
-          <Link to="/people">People</Link>
-          <Link to="/planets">Planets</Link>
-        </Link>
+          <Menu.Item>
+            <Link to="/people">People</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/planets">Planets</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/films">Films</Link>
+          </Menu.Item>
+        </Menu>
       </Header>
     </Layout>
   );
