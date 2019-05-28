@@ -8,14 +8,6 @@ export default class ItemDetails extends React.Component {
     list: []
   };
 
-  // async componentDidMount() {
-  //   const number = this.props.match.params.number;
-  //   console.log(number);
-  //   const response = await fetch(`https://swapi.co/api/people/${number}`);
-  //   const data = await response.json();
-  //   this.setState({ list: data });
-  // }
-
   componentDidMount() {
     const number = this.props.match.params.number;
     fetch(`https://swapi.co/api/people/${number}`)

@@ -19,6 +19,11 @@ const Navbar = () => {
           style={{ lineHeight: "64px" }}
         >
           <Menu.Item>
+            <Link to="/" exact>
+              Home
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
             <Link to="/people">People</Link>
           </Menu.Item>
           <Menu.Item>
@@ -26,6 +31,15 @@ const Navbar = () => {
           </Menu.Item>
           <Menu.Item>
             <Link to="/films">Films</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/species">Species</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/vehicles">Vehicles</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/starships">Starships</Link>
           </Menu.Item>
         </Menu>
       </Header>

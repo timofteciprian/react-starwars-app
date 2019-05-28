@@ -1,8 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Collapse, Icon } from "antd";
-//import "./index.css";
 
 const Panel = Collapse.Panel;
 
@@ -14,21 +12,22 @@ const customPanelStyle = {
   overflow: "hidden"
 };
 
-export default class Films extends React.Component {
+export default class FilmDetails extends React.Component {
   state = {
     list: []
   };
 
   componentDidMount() {
-    fetch("https://swapi.co/api/films/")
+    const number = this.props.match.params.number;
+    fetch(`https://swapi.co/api/films/${number}`)
       .then(res => res.json())
       .then(json => {
-        this.setState({ list: json.results });
+        this.setState({ list: json });
       });
   }
 
   render() {
-    return this.state.list.map((item, index) => (
+    return (
       <Collapse
         bordered={false}
         defaultActiveKey={["1"]}
@@ -36,11 +35,16 @@ export default class Films extends React.Component {
           <Icon type="caret-right" rotate={isActive ? 90 : 0} />
         )}
       >
-        <Panel header={item.title} style={customPanelStyle}>
+        <Panel header="This is panel header 1" style={customPanelStyle}>
           <p>{this.state.list.title}</p>
-          <Link to={`/films/${index + 1}`}> Details</Link>
+        </Panel>
+        <Panel header="This is panel header 2" style={customPanelStyle}>
+          <p>{this.state.list.title}</p>
+        </Panel>
+        <Panel header="This is panel header 3" style={customPanelStyle}>
+          <p>{this.state.list.title}</p>
         </Panel>
       </Collapse>
-    ));
+    );
   }
 }

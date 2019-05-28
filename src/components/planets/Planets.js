@@ -1,17 +1,19 @@
 import React from "react";
 
-export default class People extends React.Component {
+export default class Planets extends React.Component {
   state = {
     list: []
   };
 
-  async componentDidMount() {
-    const response = await fetch("https://swapi.co/api/planets");
-    const data = await response.json();
-    this.setState({ list: data.results });
+  componentDidMount() {
+    fetch("https://swapi.co/api/planets")
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ list: json.results });
+      });
   }
 
   render() {
-    return this.state.list.map(item => <div>{item.name}</div>);
+    return this.state.list.map(item => <p> item.name </p>);
   }
 }
