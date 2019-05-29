@@ -1,22 +1,75 @@
 import React from "react";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
-//import "./index.css";
+import { List, Pagination, Spin } from "antd";
 
-export default class Species extends React.Component {
+export default class People extends React.Component {
   state = {
-    list: []
+    list: [],
+    count: 0,
+    pageNumber: 1,
+    loading: false
   };
 
   componentDidMount() {
-    fetch("https://swapi.co/api/species")
-      .then(res => res.json())
-      .then(json => {
-        this.setState({ list: json.results });
-      });
+    this.fetchData(1);
   }
 
+  fetchData = pageNumber => {
+    fetch(`https://swapi.co/api/species/?page=${pageNumber}`)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ list: json.results, count: json.count, loading: true });
+      });
+  };
+
+  onChange = page => {
+    this.setState({
+      pageNumber: page
+    });
+    this.fetchData(page);
+  };
+
   render() {
-    return this.state.list.map((item, index) => <div> item.name </div>);
+    if (!this.state.loading) {
+      return (
+        <div style={divStyle}>
+          <Spin size="small" />
+          <Spin />
+          <Spin size="large" tip="Loading..." />
+        </div>
+      );
+    }
+    return (
+      <div style={divStyle}>
+        <List
+          itemLayout="vertical"
+          size="large"
+          dataSource={this.state.list}
+          renderItem={item => (
+            <List.Item key={item.name}>
+              <Link
+                to={`/species/${item.url.split("species/")[1].split("/")[0]}`}
+              >
+                {item.name}
+              </Link>
+            </List.Item>
+          )}
+        />
+        <Pagination
+          current={this.state.pageNumber}
+          onChange={this.onChange}
+          total={this.state.count}
+        />
+      </div>
+    );
   }
 }
+
+const divStyle = {
+  width: "50%",
+  display: "flex",
+  alignItems: "center",
+  alignContent: "center",
+  flexDirection: "column"
+};
