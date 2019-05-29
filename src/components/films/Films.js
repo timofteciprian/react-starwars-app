@@ -37,8 +37,8 @@ export default class Films extends React.Component {
         )}
       >
         <Panel header={item.title} style={customPanelStyle}>
-          <p>{this.state.list.title}</p>
           <Link to={`/films/${index + 1}`}> Details</Link>
+          <p>{item.opening_crawl}</p>
         </Panel>
       </Collapse>
     ));

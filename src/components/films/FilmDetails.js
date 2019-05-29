@@ -1,50 +1,55 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { Collapse, Icon } from "antd";
-
-const Panel = Collapse.Panel;
-
-const customPanelStyle = {
-  background: "#f7f7f7",
-  borderRadius: 4,
-  marginBottom: 24,
-  border: 0,
-  overflow: "hidden"
-};
+import { Descriptions } from "antd";
 
 export default class FilmDetails extends React.Component {
   state = {
-    list: []
+    item: {}
   };
 
   componentDidMount() {
-    const number = this.props.match.params.number;
-    fetch(`https://swapi.co/api/films/${number}`)
+    const numberFilm = this.props.match.params.numberFilm;
+    console.log(this.props.match);
+    fetch(`https://swapi.co/api/films/${numberFilm}`)
       .then(res => res.json())
       .then(json => {
-        this.setState({ list: json });
+        this.setState({ item: json });
       });
   }
 
   render() {
     return (
-      <Collapse
-        bordered={false}
-        defaultActiveKey={["1"]}
-        expandIcon={({ isActive }) => (
-          <Icon type="caret-right" rotate={isActive ? 90 : 0} />
-        )}
-      >
-        <Panel header="This is panel header 1" style={customPanelStyle}>
-          <p>{this.state.list.title}</p>
-        </Panel>
-        <Panel header="This is panel header 2" style={customPanelStyle}>
-          <p>{this.state.list.title}</p>
-        </Panel>
-        <Panel header="This is panel header 3" style={customPanelStyle}>
-          <p>{this.state.list.title}</p>
-        </Panel>
-      </Collapse>
+      <div>
+        <h1>{this.state.item.title}</h1>
+        <h2>Description</h2>
+        <p>{this.state.item.opening_crawl}</p>
+        <Descriptions bordered>
+          <Descriptions.Item label="Episode">
+            {this.state.item.episode_id}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Director">
+            {this.state.item.director}
+          </Descriptions.Item>
+          <Descriptions.Item label="roducer">
+            {this.state.item.producer}
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Config Info">
+            Data disk type: MongoDB
+            <br />
+            Database version: 3.4
+            <br />
+            Package: dds.mongo.mid
+            <br />
+            Storage space: 10 GB
+            <br />
+            Replication_factor:3
+            <br />
+            Region: East China 1<br />
+          </Descriptions.Item>
+        </Descriptions>
+      </div>
     );
   }
 }
