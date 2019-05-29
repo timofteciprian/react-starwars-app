@@ -5,7 +5,7 @@ import { Descriptions } from "antd";
 
 export default class ItemDetails extends React.Component {
   state = {
-    list: []
+    item: {}
   };
 
   componentDidMount() {
@@ -13,7 +13,7 @@ export default class ItemDetails extends React.Component {
     fetch(`https://swapi.co/api/people/${number}`)
       .then(res => res.json())
       .then(json => {
-        this.setState({ list: json });
+        this.setState({ item: json });
       });
   }
 
@@ -21,28 +21,28 @@ export default class ItemDetails extends React.Component {
     return (
       <Descriptions title="User Info">
         <Descriptions.Item label="Name">
-          {this.state.list.name}
+          {this.state.item.name}
         </Descriptions.Item>
         <Descriptions.Item label="Height">
-          {this.state.list.height}
+          {this.state.item.height}
         </Descriptions.Item>
         <Descriptions.Item label="Mass">
-          {this.state.list.mass}
+          {this.state.item.mass}
         </Descriptions.Item>
         <Descriptions.Item label="Hair Color">
-          {this.state.list.hair_color}
+          {this.state.item.hair_color}
         </Descriptions.Item>
         <Descriptions.Item label="Skin Color">
-          {this.state.list.skin_color}
+          {this.state.item.skin_color}
         </Descriptions.Item>
         <Descriptions.Item label="Eye Color">
-          {this.state.list.eye_color}
+          {this.state.item.eye_color}
         </Descriptions.Item>
         <Descriptions.Item label="Birth Year">
-          {this.state.list.birth_year}
+          {this.state.item.birth_year}
         </Descriptions.Item>
         <Descriptions.Item label="Gender">
-          {this.state.list.gender}
+          {this.state.item.gender}
         </Descriptions.Item>
       </Descriptions>
     );

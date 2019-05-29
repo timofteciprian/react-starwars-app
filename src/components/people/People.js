@@ -1,46 +1,62 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
-import { List } from "antd";
-//import "./index.css";
+import { List, Pagination } from "antd";
 
 export default class People extends React.Component {
   state = {
-    list: []
+    list: [],
+    count: 0,
+    pageNumber: 1
   };
 
   componentDidMount() {
-    fetch("https://swapi.co/api/people")
+    this.fetchData(1);
+  }
+
+  fetchData = pageNumber => {
+    fetch(`https://swapi.co/api/people/?page=${pageNumber}`)
       .then(res => res.json())
       .then(json => {
-        this.setState({ list: json.results });
+        this.setState({ list: json.results, count: json.count });
       });
-  }
+  };
+
+  onChange = page => {
+    console.log(page);
+    this.setState({
+      pageNumber: page
+    });
+    this.fetchData(page);
+  };
 
   render() {
     return (
-      <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-          onChange: page => {
-            console.log(page);
-          },
-          pageSize: 10
-        }}
-        dataSource={this.state.list}
-        renderItem={(item, index) => (
-          <List.Item key={item.title}>
-            <Link to={`/people/${index + 1}`}>{item.name}</Link>
-          </List.Item>
-        )}
-      />
+      <div style={divStyle}>
+        <List
+          itemLayout="vertical"
+          size="large"
+          dataSource={this.state.list}
+          renderItem={(item, index) => (
+            <List.Item key={item.name}>
+              <Link to={`/people/${index + 1}`}>{item.name}</Link>
+            </List.Item>
+          )}
+        />
+        <Pagination
+          current={this.state.pageNumber}
+          onChange={this.onChange}
+          total={this.state.count}
+        />
+      </div>
     );
   }
 }
 
-// this.state.list.map((item, index) => (
-//   <div>
-//     <Link to={`/people/${index + 1}`}>{item.name}</Link>
-//   </div>
-// ));
+const divStyle = {
+  width: "50%",
+  display: "flex",
+  alignItems: "center",
+  alignContent: "center",
+  flexDirection: "column"
+};
