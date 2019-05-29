@@ -11,21 +11,29 @@ import Vehicles from "./vehicles/Vehicles";
 import Starships from "./starships/Starships";
 import FilmDetails from "./films/FilmDetails";
 import Home from "./home/Home";
+import PlanetDetails from "./planets/PlanetDetails";
+import SpeciesDetails from "./species/SpeciesDetails";
+import StarshipDetails from "./starships/StarshipDetails";
+import VehicleDetails from "./vehicles/VehicleDetails";
 
 function App() {
   return (
     <div className="container-fluid">
       <Navbar />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/people" component={People} />
-        <Route path="/people/:number" component={ItemDetails} />
-        <Route path="/planets" component={Planets} />
+        <Route path="/people/:numberPeople" component={ItemDetails} />
+        <Route exact path="/planets" component={Planets} />
+        <Route path="/planets/:numberPlanet" component={PlanetDetails} />
         <Route exact path="/films" component={Films} />
         <Route path="/films/:numberFilm" component={FilmDetails} />
-        <Route path="/species" component={Species} />
-        <Route path="/vehicles" component={Vehicles} />
-        <Route path="/starships" component={Starships} />
+        <Route exact path="/species" component={Species} />
+        <Route path="/species/:numberSpecies" component={SpeciesDetails} />
+        <Route exact path="/vehicles" component={Vehicles} />
+        <Route path="/vehicles/:numberVehicle" component={VehicleDetails} />
+        <Route exact path="/starships" component={Starships} />
+        <Route path="/starships/:numberStarship" component={StarshipDetails} />
         <Route component={PageNotFound} />
       </Switch>
     </div>

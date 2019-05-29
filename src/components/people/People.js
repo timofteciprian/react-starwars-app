@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
-import { List, Pagination } from "antd";
+import { List, Pagination, Spin } from "antd";
 
 export default class People extends React.Component {
   state = {
     list: [],
     count: 0,
-    pageNumber: 1
+    pageNumber: 1,
+    loading: false
   };
 
   componentDidMount() {
@@ -18,12 +19,11 @@ export default class People extends React.Component {
     fetch(`https://swapi.co/api/people/?page=${pageNumber}`)
       .then(res => res.json())
       .then(json => {
-        this.setState({ list: json.results, count: json.count });
+        this.setState({ list: json.results, count: json.count, loading: true });
       });
   };
 
   onChange = page => {
-    console.log(page);
     this.setState({
       pageNumber: page
     });
@@ -31,15 +31,28 @@ export default class People extends React.Component {
   };
 
   render() {
+    if (!this.state.loading) {
+      return (
+        <div style={divStyle}>
+          <Spin size="small" />
+          <Spin />
+          <Spin size="large" tip="Loading..." />
+        </div>
+      );
+    }
     return (
       <div style={divStyle}>
         <List
           itemLayout="vertical"
           size="large"
           dataSource={this.state.list}
-          renderItem={(item, index) => (
+          renderItem={item => (
             <List.Item key={item.name}>
-              <Link to={`/people/${index + 1}`}>{item.name}</Link>
+              <Link
+                to={`/people/${item.url.split("people/")[1].split("/")[0]}`}
+              >
+                {item.name}
+              </Link>
             </List.Item>
           )}
         />

@@ -28,7 +28,7 @@ export default class SpeciesDetails extends React.Component {
       );
     }
     return (
-      <Descriptions title="User Info">
+      <Descriptions title="Details">
         <Descriptions.Item label="Name">
           {this.state.item.name}
         </Descriptions.Item>
